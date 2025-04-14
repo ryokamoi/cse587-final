@@ -23,15 +23,16 @@ conda activate cse587-training
 
 # install LLaMA-Factory
 git clone https://github.com/hiyouga/LLaMA-Factory.git ../LLaMA-Factory-CSE587
-cd ../LLaMA-Factory-FoVer
+cd ../LLaMA-Factory-CSE587
 
 git checkout 4a5d0f0
 pip install -e ".[torch,metrics]"
 
-cd ../FoVer
+cd ../cse587-final
+# end of installation of LLaMA-Factory
 
 # additional dependencies
 pip install deepspeed==0.16.4
-MAX_JOBS=4 pip install flash-attn==2.7.4.post1 --no-build-isolation
+# MAX_JOBS=4 pip install flash-attn==2.7.4.post1 --no-build-isolation
 
 conda deactivate

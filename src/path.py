@@ -1,6 +1,9 @@
 from pathlib import Path
 
-outputs_dir = Path("outputs")
+downloaded_abstracts_dir = Path("downloaded_abstracts")
+
+outputs_dir = Path("outputs")  # model responses
+
 
 extracted_research_questions_dir = outputs_dir / "extracted_research_questions"
 
