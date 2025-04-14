@@ -1,5 +1,8 @@
 from pathlib import Path
 
+dataset_dir = Path("dataset")
+abstracts_dir = dataset_dir / "abstracts"
+
 downloaded_abstracts_dir = Path("downloaded_abstracts")
 
 outputs_dir = Path("outputs")  # model responses
