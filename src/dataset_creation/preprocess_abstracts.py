@@ -1,3 +1,6 @@
+# This is the code for making jsonl files from the downloaded abstracts
+
+
 import json
 import random
 
