@@ -1,0 +1,65 @@
+Few-shot Examples:
+
+Example 1: 
+
+abstract: Virtual environments play a key role in benchmarking advances in complex planning and decision-making tasks but are expensive and complicated to build by hand. Can current language models themselves serve as world simulators, correctly predicting how actions change different world states, thus bypassing the need for extensive manual coding? Our goal is to answer this question in the context of text-based simulators. Our approach is to build and use a new benchmark, called ByteSized32-State-Prediction, containing a dataset of text game state transitions and accompanying game tasks. We use this to directly quantify, for the first time, how well LLMs can serve as text-based world simulators. We test GPT-4 on this dataset and find that, despite its impressive performance, it is still an unreliable world simulator without further innovations. This work thus contributes both new insights into current LLM’s capabilities and weaknesses, as well as a novel benchmark to track future progress as new models appear.
+
+research question: Can current language models serve as accurate text based world simulators by correctly predicting action based state changes?
+        
+approach: They have Created and used the ByteSized32-State-Prediction benchmark with a dataset of text game state transition to test LLMs like GPT-4.
+
+Example 2:
+
+abstract: We present UltraSparseBERT, a BERT variant that uses 0.3% of its neurons during inference while performing on par with similar BERT models. UltraSparseBERT selectively engages just 12 out of 4095 neurons for each layer inference. This is achieved by reorganizing feedforward networks into fast feedforward networks (FFFs).To showcase but one benefit of high sparsity, we provide an Intel MKL implementation achieving 78x speedup over the optimized feedforward baseline on CPUs, and an OpenAI Triton implementation performing forward passes 4.1x faster than the corresponding native GPU implementation. The training and benchmarking code is enclosed.
+
+research question: " "
+        
+approach: They have proposed a UltraSparseBERT with fast feedforward networks implemented using MKL and an OpenAI Triton for high sparsity and speed.
+
+Example 3:
+
+abstract: The paper introduces SceMQA, a novel benchmark for scientific multimodal question answering at the college entrance level. It addresses a critical educational phase often overlooked in existing benchmarks, spanning high school to pre-college levels. SceMQA focuses on core science subjects including Mathematics, Physics, Chemistry, and Biology. It features a blend of multiple-choice and free-response formats, ensuring a comprehensive evaluation of AI models’ abilities. Additionally, our benchmark provides specific knowledge points for each problem and detailed explanations for each answer. SceMQA also uniquely presents problems with identical contexts but varied questions to facilitate a more thorough and accurate assessment of reasoning capabilities. In the experiment, we evaluate both open-source and close-source state-of-the-art Multimodal Large Language Models (MLLMs), across various experimental settings. The results show that further research and development are needed in developing more capable MLLM, as highlighted by only 50% to 60% accuracy achieved by the strongest models.
+        
+research question: How capable are current Multimodal LLMs at scientific multimodal question answering at the college entrance level?
+        
+approach: They Created a SceMQA benchmark and evaluation of multiple Multimodal LLMs across diverse question answering formats.
+
+Example 4:
+
+abstract: Retrieval augmented generation (RAG) exhibits outstanding performance in promoting the knowledge capabilities of large language models (LLMs) with retrieved documents related to user queries. However, RAG only focuses on improving the response quality of LLMs via enhancing queries indiscriminately with retrieved information, paying little attention to what type of knowledge LLMs really need to answer original queries more accurately. In this paper, we suggest that long-tail knowledge is crucial for RAG as LLMs have already remembered common world knowledge during large-scale pre-training. Based on our observation, we propose a simple but effective long-tail knowledge detection method for LLMs. Specifically, the novel Generative Expected Calibration Error (GECE) metric is derived to measure the “long-tailness” of knowledge based on both statistics and semantics. Hence, we retrieve relevant documents and infuse them into the model for patching knowledge loopholes only when the input query relates to long-tail knowledge. Experiments show that, compared to existing RAG pipelines, our method achieves over 4x speedup in average inference time and consistent performance improvement in downstream tasks.
+
+research question: Can long-tail knowledge improves the effectiveness of retrieval-augmented generation for LLMs?
+        
+approach: They proposed a simple but effective method, novel Generative Expected Calibration Error(GECE) metric for long-tail knowledge detection and selective document retrieval.
+        
+Example 5: 
+
+abstract: The knowledge graph-to-text (KG-to-text) generation task aims to synthesize coherent and engaging sentences that accurately convey the complex information derived from an input knowledge graph. Existing methods generate the whole target text based on all KG triples at once and may incorporate incorrect KG triples for each sentence. To this end, we propose the bi-directional multi-granularity generation framework. Instead of generating the whole text at a time, we construct the sentence level generation based on the corresponding triples and generate the graph-level text as a result. Moreover, we design a backward relation extraction task to enhance the correctness of relational information. Our method achieves the new state-of-the-art in benchmark dataset WebNLG and further analysis shows the efficiency of different modules.
+        
+research question: How can Knowledge Graph-to-text generation be improved to reduce the errors and improve alignment with Knowledge Graph triples?
+        
+approach: They proposed a Bi-directional multi-granularity generation framework and designed a backward relation extraction task to generate sentence-level text.
+
+Example 6:        
+        
+abstract: We present a novel Parameter-Efficient Fine-Tuning (PEFT) method, dubbed as Adaptive Freezing of Low-Rank Adaptation (AFLoRA). Specifically, for each pre-trained frozen weight tensor, we add a parallel path of trainable low-rank matrices, namely a down-projection and an up-projection matrix, each of which is followed by a feature transformation vector. Based on a novel freezing score, we incrementally freeze these projection matrices during fine-tuning to reduce the computation and alleviate over-fitting. Our experimental results demonstrate that we can achieve state-of-the-art performance with an average improvement of up to 0.85% as evaluated on the GLUE benchmark while yielding up to 9.5× fewer average trainable parameters. While compared in terms of runtime, AFLoRA can yield up to 1.86× improvement as opposed to similar PEFT alternatives. Besides the practical utility of our approach, we provide insights on the trainability requirements of LoRA paths at different modules and the freezing schedule for the different projection matrices.
+        
+research question: Can PEFT performance be improved while reducing trainable parameters and its runtime?
+        
+approach: They presented a novel Parameter-Efficient Fine-Tuning method which is also known as Adaptive Freezing of Low-Rank Adaptation(AFLoRA), it was freezing score-based incremental freezing of LoRA paths during fine-tuning.
+
+Example 7:
+
+abstract: Large Language Models (LLMs) have shown that their reasoning ability could be enhanced through approaches like Chain-of-Thought (CoT) prompting. However, these methods use single prompts for different types of questions and do not design appropriate prompts for questions with different characteristics. In this paper, we aim to explore a methodology that generates differentially diverse reasoning paths for different types of questions. To achieve this, we propose a novel prompting strategy called Differential Diversity Prompting (DDPrompt). Firstly, we generate the optimal prompts collection based on question characteristics. Then, we use this optimal prompts collection to generate multiple answers for a question and choose the final answer by voting. We evaluated DDPrompt on twelve reasoning benchmarks and significant improvement in the performance of LLMs on complex reasoning tasks (e.g., GSM8K 75%->84%, Tracking Shuffled Objects (68.8%->83.9%)).
+        
+research question: Can diverse prompting paths improve LLM reasoning across question types?
+        
+approach: They proposed a Differential Diversity Prompting(DDPrompt) which is to generate diverse reasoning paths using prompt selection and to choose the final answer by voting.
+   
+Example 8:
+
+abstract: Language models (LMs) can express factual knowledge involving numeric properties such as Karl Popper was born in 1902. However, how this information is encoded in the model’s internal representations is not understood well. Here, we introduce a method for finding and editing representations of numeric properties such as an entity’s birth year. We find directions that encode numeric properties monotonically, in an interpretable fashion. When editing representations along these directions, LM output changes accordingly. For example, by patching activations along a “birthyear” direction we can make the LM express an increasingly late birthyear. Property-encoding directions exist across several numeric properties in all models under consideration, suggesting the possibility that monotonic representation of numeric properties consistently emerges during LM pretraining.Code: https://github.com/bheinzerling/numeric-property-reprA long version of this short paper is available at: https://arxiv.org/abs/2403.10381
+        
+research question: How are numeric properties like birth years i.e., 1902 encoded in language model representations?
+        
+approach: They introduced a method for finding and editing monotonic directions in Language Model activations to change the generated numeric outputs.
