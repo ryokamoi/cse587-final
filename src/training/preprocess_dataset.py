@@ -10,22 +10,24 @@ from src.path import get_extracted_research_question_model_responses_path, \
 
 
 def preprocess_extracted_research_questions_and_approaches(
-        model_response: str) -> dict:
+        model_response: dict[str, str]) -> dict:
     # Use regular expressions to capture content after each label
     match = re.search(
         r"Research Question:\s*(.*?)\s*Approach:\s*(.*)",
-        model_response, re.DOTALL
+        model_response["output"], re.DOTALL
     )
     
     if match:
         research_question = match.group(1).strip()
         approach = match.group(2).strip()
         return {
+            "id": model_response["id"],
             "research_question": research_question,
             "approach": approach
         }
     else:
         return {
+            "id": model_response["id"],
             "research_question": None,
             "approach": None
         }
@@ -53,7 +55,7 @@ def main():
     processed_research_questions = []
     for example in raw_extracted_research_questions:
         processed_example = preprocess_extracted_research_questions_and_approaches(
-            example["output"]
+            example
         )
         processed_research_questions.append(processed_example)
     
