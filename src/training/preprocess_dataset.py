@@ -6,7 +6,7 @@ from src.config import dataset_name
 from src.research_question_extraction.run_research_question_extraction \
     import ResearchQuestionExtractionTap
 from src.path import get_extracted_research_question_model_responses_path, \
-    sharegpt_dataset_dir, llama_factory_dir
+    sharegpt_dataset_dir, llama_factory_dir, get_evaluation_dataset_path
 
 
 def preprocess_extracted_research_questions_and_approaches(
@@ -56,6 +56,14 @@ def main():
             example["output"]
         )
         processed_research_questions.append(processed_example)
+    
+    evaluation_dataset_path = get_evaluation_dataset_path(
+        model_name=args.model_name
+    )
+    evaluation_dataset_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(evaluation_dataset_path, "w") as f:
+        for example in processed_research_questions:
+            f.write(json.dumps(example) + "\n")
 
     # convert into ShareGPT format
     share_gpt_format_dataset = []

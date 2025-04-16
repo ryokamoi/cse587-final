@@ -5,6 +5,7 @@ dataset_dir = Path("dataset")
 abstracts_dir = dataset_dir / "abstracts"
 few_shot_examples_path = dataset_dir / "few_shot_examples.jsonl"
 extracted_research_questions_dir = dataset_dir / "extracted_research_questions"
+evaluation_dataset_dir = dataset_dir / "evaluation_dataset"
 
 sharegpt_dataset_dir = dataset_dir / "sharegpt_dataset"
 
@@ -28,4 +29,9 @@ def get_extracted_research_question_model_responses_path(
     
     model_short_name = get_model_short_name(model_name)
     return extracted_research_questions_dir / model_short_name / f"{split}.jsonl"
+
+
+def get_evaluation_dataset_path(model_name: str):
+    model_short_name = get_model_short_name(model_name)
+    return evaluation_dataset_dir / f"extraction={model_short_name}" / "evaluation.jsonl"
 
