@@ -1,16 +1,22 @@
 from pathlib import Path
 
+# dataset
 dataset_dir = Path("dataset")
 abstracts_dir = dataset_dir / "abstracts"
 few_shot_examples_path = dataset_dir / "few_shot_examples.jsonl"
 extracted_research_questions_dir = dataset_dir / "extracted_research_questions"
 
+sharegpt_dataset_dir = dataset_dir / "sharegpt_dataset"
+
+# raw resources
 downloaded_abstracts_dir = Path("downloaded_abstracts")
 
+# model responses
 outputs_dir = Path("outputs")  # model responses
-
-
 extracted_research_questions_dir = outputs_dir / "extracted_research_questions"
+
+# llama factory
+llama_factory_dir = Path("../LLaMA-Factory-CSE587")
 
 
 def get_model_short_name(model_name: str) -> str:

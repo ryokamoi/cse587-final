@@ -10,7 +10,7 @@ from src.path import get_extracted_research_question_model_responses_path, \
 from src.utils.chat_template import get_chat_template
 
 
-class ResearchQuestionExtractionConfig(Tap):
+class ResearchQuestionExtractionTap(Tap):
     abstracts_dir: str = "dataset/abstracts"  # jsonl
     model_name: str = "meta-llama/Llama-3.1-8B-Instruct"
     max_tokens: int = 2048
@@ -27,7 +27,7 @@ Approach: {approach}"""
 
 
 def main():
-    args = ResearchQuestionExtractionConfig().parse_args()
+    args = ResearchQuestionExtractionTap().parse_args()
 
     # load few-shot examples
     with open(few_shot_examples_path, "r") as f:
