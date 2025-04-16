@@ -1,4 +1,4 @@
-Fall 2025 CSE 587 Final Project
+Spring 2025 CSE 587 Final Project
 
 ## Members
 
