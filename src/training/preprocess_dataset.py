@@ -2,13 +2,11 @@ import re
 import json
 from pathlib import Path
 
+from src.config import dataset_name
 from src.research_question_extraction.run_research_question_extraction \
     import ResearchQuestionExtractionTap
 from src.path import get_extracted_research_question_model_responses_path, \
     sharegpt_dataset_dir, llama_factory_dir
-
-
-dataset_name = "cse587spring2025final"
 
 
 def preprocess_extracted_research_questions_and_approaches(
