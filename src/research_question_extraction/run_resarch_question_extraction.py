@@ -1,4 +1,4 @@
-import jsonl
+import json
 
 import vllm
 from tap import Tap
