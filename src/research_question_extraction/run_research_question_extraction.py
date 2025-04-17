@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+import torch
 import vllm
 from tap import Tap
 from tqdm import tqdm
@@ -12,7 +13,7 @@ from src.utils.chat_template import get_chat_template
 
 class ResearchQuestionExtractionTap(Tap):
     abstracts_dir: str = "dataset/abstracts"  # jsonl
-    model_name: str = "meta-llama/Llama-3.1-8B-Instruct"
+    model_name: str = "meta-llama/Llama-3.3-70B-Instruct"
     max_tokens: int = 2048
     batch_size: int = 16
 
@@ -58,7 +59,9 @@ def main():
         print(example)
     
     # load vllm model
-    model = vllm.LLM(model=args.model_name)
+    num_gpus = torch.cuda.device_count()
+    model = vllm.LLM(model=args.model_name, tensor_parallel_size=num_gpus)
+
     if "gemma" in args.model_name:
         # gemma use different name for max tokens to generate
         sampling_params = vllm.SamplingParams(
