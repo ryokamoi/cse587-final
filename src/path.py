@@ -37,7 +37,10 @@ def get_evaluation_dataset_path(model_name: str):
 
 
 def get_predicted_research_question_model_responses_path(
-        model_name: str
+        model_name: str, few_shot: bool = False
     ) -> Path:
     model_short_name = get_model_short_name(model_name)
+    if few_shot:
+        model_short_name = f"few_shot_{model_short_name}"
+
     return outputs_dir / "predicted_approaches" / f"{model_short_name}.jsonl"

@@ -1,19 +1,31 @@
 import json
 
+import torch
 import vllm
 from tap import Tap
 from tqdm import tqdm
 
 from src.path import get_evaluation_dataset_path, \
-    get_predicted_research_question_model_responses_path
+    get_predicted_research_question_model_responses_path, \
+    few_shot_examples_path
 from src.utils.chat_template import get_chat_template
 
 
 class InferenceTap(Tap):
     extraction_model_name: str = "meta-llama/Llama-3.3-70B-Instruct"
     model_name: str = "llama_factory_finetuned_models/Llama-3.1-8B-Instruct_cse587spring2025final_1.0e-5"
-    max_tokens: int = 512
+    max_tokens: int = 2048
     batch_size: int = 16
+    few_shot: bool = False
+
+
+research_question_generation_input_format = """Your task is to generate a possible approach to the research question.
+* You should only generate the approach and do not include any other information.
+* You should generate an approach that is novel and reasonably feasible.
+* Your response should be a paragraph without any bullet points or lists.
+* Your response should follow the format and style of the examples in the previous messages.
+
+Research Question: {research_question}"""
 
 
 def main():
@@ -24,10 +36,36 @@ def main():
         model_name = args.extraction_model_name
     )
     with open(evalaution_dataset_path, "r") as f:
-        dataset = [json.loads(line) for line in f.readlines()]
+        dataset = [json.loads(line) for line in f.readlines()][:100]
+
+    # make few-shot example
+    few_shot_examples = []
+    if args.few_shot:
+        with open(few_shot_examples_path, "r") as f:
+            raw_few_shot_examples = [
+                json.loads(line) for line in f.readlines()
+            ]
+
+        for example in raw_few_shot_examples:
+            few_shot_examples.append(
+                get_chat_template(
+                    role="user",
+                    content=research_question_generation_input_format.format(
+                        research_question=example["research_question"]
+                    )
+                )
+            )
+            few_shot_examples.append(
+                get_chat_template(
+                    role="assistant",
+                    content=example["approach"]
+                )
+            )
+
 
     # load vllm model
-    model = vllm.LLM(model=args.model_name)
+    num_gpus = torch.cuda.device_count()
+    model = vllm.LLM(model=args.model_name, tensor_parallel_size=num_gpus)
     if "gemma" in args.model_name:
         # gemma use different name for max tokens to generate
         sampling_params = vllm.SamplingParams(
@@ -57,6 +95,14 @@ def main():
     # generate
     outputs_list = []
     for batch in tqdm(batched_research_questions):
+        # when using few-shot examples, input format should be updated
+        if args.few_shot:
+            batch = [
+                research_question_generation_input_format.format(
+                    research_question=example
+                ) for example in batch
+            ]
+
         converted_prompt = [
             [
                 get_chat_template(
@@ -76,7 +122,7 @@ def main():
 
     # save outputs
     save_path = get_predicted_research_question_model_responses_path(
-        args.model_name
+        args.model_name, few_shot=args.few_shot
     )
     save_path.parent.mkdir(parents=True, exist_ok=True)
 
