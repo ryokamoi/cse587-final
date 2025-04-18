@@ -10,7 +10,7 @@ from src.utils.chat_template import get_chat_template
 
 
 class InferenceTap(Tap):
-    extraction_model_name: str = "meta-llama/Llama-3.1-8B-Instruct"
+    extraction_model_name: str = "meta-llama/Llama-3.3-70B-Instruct"
     model_name: str = "llama_factory_finetuned_models/Llama-3.1-8B-Instruct_cse587spring2025final_1.0e-5"
     max_tokens: int = 512
     batch_size: int = 16

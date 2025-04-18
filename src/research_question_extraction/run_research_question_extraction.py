@@ -19,10 +19,18 @@ class ResearchQuestionExtractionTap(Tap):
 
 
 user_input_template = """Your task is to extract the main research question and approach from the given abstract.
+* If this work does not propose a new method, such as evaluation work or survey, please answer "no" and do not provide any research question, approach, or explanation.
+* Your task is extraction and summarization. You should not add any additional information or explanation. You should not come up with any new research question or approach.
+* Please refer to the previous examples as few-shot examples to understand the format of the output.
 
 Abstract: {abstract}"""
 
-response_template = """Research Question: {research_question}
+
+response_template_yes_no_only = "This work proposes a new method: {yes_no}"
+
+response_template = response_template_yes_no_only + """
+
+Research Question: {research_question}
 
 Approach: {approach}"""
 
@@ -44,12 +52,24 @@ def main():
             )
         )
 
-        assistant_output = get_chat_template(
-            role="assistant" if "gemma" not in args.model_name else "model",
-            content=response_template.format(
+        if example["proposed_a_new_method_match"] == "yes":
+            content = response_template.format(
+                yes_no="yes",
                 research_question=example["research_question"],
                 approach=example["approach"]
             )
+        elif example["proposed_a_new_method_match"] == "no":
+            content = response_template_yes_no_only.format(
+                yes_no="no"
+            )
+        else:
+            raise ValueError(
+                f"proposed_a_new_method_match should be yes or no, but got {example['proposed_a_new_method_match']}"
+            )
+
+        assistant_output = get_chat_template(
+            role="assistant" if "gemma" not in args.model_name else "model",
+            content=content
         )
 
         few_shot_examples.extend([user_input, assistant_output])
@@ -82,9 +102,9 @@ def main():
         with open(Path(args.abstracts_dir) / f"{split}.jsonl", "r") as f:
             dataset = [json.loads(line) for line in f.readlines()]
         
-        ### for debug
-        dataset = dataset[:32]
-        ###
+        # ### for debug
+        # dataset = dataset[:32]
+        # ###
         
         # make batched prompt
         abstracts = [d["abstract"] for d in dataset]
@@ -105,8 +125,6 @@ def main():
                     )
                 ] for example in batch
             ]
-
-            print(converted_prompt)
 
             response = model.chat(
                 messages=converted_prompt,
