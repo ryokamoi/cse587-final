@@ -7,9 +7,15 @@ import random
 from src.path import downloaded_abstracts_dir, abstracts_dir
 
 
-downloaded_directory_name = {
-    "train": "2023-Train set",
-    "test": "2024-Test set",
+# downloaded_directory_name = {
+#     "train": "2023-Train set",
+#     "test": "2024-Test set",
+# }
+
+
+split_file_name = {
+    "train": "acl-emnlp-naacl-2020-2023_abstracts.json",
+    "test": "acl-emnlp-naacl-2024_abstracts.json",
 }
 
 
@@ -17,45 +23,52 @@ def main():
     abstracts_dir.mkdir(parents=True, exist_ok=True)
     
     for split in ["train", "test"]:
-        directory_name = downloaded_directory_name[split]
-        directory = downloaded_abstracts_dir / directory_name
 
-        # all files in the directory
-        # sort to make sure the order is reproducible
-        file_names_list = sorted(list(directory.glob("*.txt")))
+        ####
+        # old code
+        # directory_name = downloaded_directory_name[split]
+        # directory = downloaded_abstracts_dir / directory_name
 
-        file_names = []
-        urls = []
-        abstracts = []
-        for file_name in file_names_list:
-            with open(file_name, "r") as f:
-                lines = f.readlines()
+        # # all files in the directory
+        # # sort to make sure the order is reproducible
+        # file_names_list = sorted(list(directory.glob("*.txt")))
+
+        # file_names = []
+        # urls = []
+        # abstracts = []
+        # for file_name in file_names_list:
+        #     with open(file_name, "r") as f:
+        #         lines = f.readlines()
             
-            # extract urls
-            for line in lines:
-                if "URL: " in line:
-                    urls.append(line.split("URL: ")[1].strip())
+        #     # extract urls
+        #     for line in lines:
+        #         if "URL: " in line:
+        #             urls.append(line.split("URL: ")[1].strip())
             
-            # extract abstract
-            for line in lines:
-                if "Abstract: Abstract" in line:
-                    abstracts.append(line.split("Abstract: Abstract")[1].strip())
+        #     # extract abstract
+        #     for line in lines:
+        #         if "Abstract: Abstract" in line:
+        #             abstracts.append(line.split("Abstract: Abstract")[1].strip())
             
-            # check the number of urls and abstracts
-            if len(urls) != len(abstracts):
-                raise ValueError(f"Number of urls and abstracts do not match in {directory_name}")
+        #     # check the number of urls and abstracts
+        #     if len(urls) != len(abstracts):
+        #         raise ValueError(f"Number of urls and abstracts do not match in {directory_name}")
             
-            file_names.extend([file_name.stem] * len(urls))
+        #     file_names.extend([file_name.stem] * len(urls))
+        ###
         
+        # load json file
+        directory = downloaded_abstracts_dir / split / split_file_name[split]
+        with open(directory, "r") as f:
+            raw_abstracts = json.load(f)
+
         output = []
         # save to jsonl
-        for idx in range(len(urls)):
+        for idx in range(len(raw_abstracts)):
             output.append(
                 {
                     "id": f"{split}_{idx:06}",
-                    "source": str(file_names[idx]),
-                    "url": urls[idx],
-                    "abstract": abstracts[idx],
+                    "abstract": raw_abstracts[idx]["abstract"],
                 }
             )
         

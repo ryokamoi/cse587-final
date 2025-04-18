@@ -1,5 +1,5 @@
 # refer to src/download_abstracts
 # put extracted abstracts in ./downloaded_abstracts
 
-python src/dataset_creation/preprocess_abstracts.py
+python src/research_question_extraction/preprocess_abstracts.py
 
