@@ -54,6 +54,10 @@ def main():
     # preprocess research questions and approaches
     processed_research_questions = []
     for example in raw_extracted_research_questions:
+        if "This work proposes a new method: no" in example["output"]:
+            # skip the example
+            continue
+
         processed_example = preprocess_extracted_research_questions_and_approaches(
             example
         )
