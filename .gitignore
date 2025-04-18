@@ -1,7 +1,5 @@
 *__pycache__
 
-dataset/sharegpt_dataset/
-
 llama_factory_finetuned_models
 !llama_factory_finetuned_models/*
 !llama_factory_finetuned_models/README.md

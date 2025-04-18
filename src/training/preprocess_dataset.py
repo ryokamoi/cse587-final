@@ -62,6 +62,12 @@ def main():
             processed_example = preprocess_extracted_research_questions_and_approaches(
                 example
             )
+
+            if processed_example["research_question"] is None or \
+                    processed_example["approach"] is None:
+                # skip the example
+                continue
+
             processed_research_questions.append(processed_example)
         
         if split == "test":
