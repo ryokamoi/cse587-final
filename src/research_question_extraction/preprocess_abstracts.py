@@ -14,8 +14,12 @@ from src.path import downloaded_abstracts_dir, abstracts_dir
 
 
 split_file_name = {
-    "train": "acl-emnlp-naacl-2020-2023_abstracts.json",
-    "test": "acl-emnlp-naacl-2024_abstracts.json",
+    "train": [
+        "acl-emnlp-naacl-2020-2023_abstracts.json", "2020-2023_abstracts.json"
+    ],
+    "test": [
+        "acl-emnlp-naacl-2024_abstracts.json", "2024_abstracts.json"
+    ],
 }
 
 
@@ -58,9 +62,11 @@ def main():
         ###
         
         # load json file
-        directory = downloaded_abstracts_dir / split / split_file_name[split]
-        with open(directory, "r") as f:
-            raw_abstracts = json.load(f)
+        raw_abstracts = []
+        for file_name in split_file_name[split]:
+            directory = downloaded_abstracts_dir / split / file_name
+            with open(directory, "r") as f:
+                raw_abstracts += json.load(f)
 
         output = []
         # save to jsonl
@@ -80,6 +86,10 @@ def main():
         with open(output_path, "w") as f:
             for line in output:
                 f.write(json.dumps(line) + "\n")
+        
+        stats_path = output_path.with_suffix(".stats.json")
+        with open(stats_path, "w") as f:
+            f.write(json.dumps({"num_samples": len(output)}, indent=4))
 
 
 if __name__ == "__main__":
