@@ -81,6 +81,9 @@ def main():
         # shuffle
         output = random.Random(42).sample(output, len(output))
 
+        if split == "test":
+            output = output[:300]
+
         # save to jsonl
         output_path = abstracts_dir / f"{split}.jsonl"
         with open(output_path, "w") as f:
