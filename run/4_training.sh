@@ -1,5 +1,6 @@
 conda activate cse587-training
 
+python src/training/generate_yaml.py
 python src/training/preprocess_dataset.py
 
 cd ../LLaMA-Factory-CSE587

@@ -40,9 +40,9 @@ def main():
             temperature=0,
         )
     
-    ### for debug
-    dataset = dataset[:32]
-    ###
+    # ### for debug
+    # dataset = dataset[:32]
+    # ###
     
     # make batched prompt
     research_questions = [

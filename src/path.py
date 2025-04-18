@@ -40,4 +40,4 @@ def get_predicted_research_question_model_responses_path(
         model_name: str
     ) -> Path:
     model_short_name = get_model_short_name(model_name)
-    return outputs_dir / "predicted_research_questions" / f"{model_short_name}.jsonl"
+    return outputs_dir / "predicted_approaches" / f"{model_short_name}.jsonl"
