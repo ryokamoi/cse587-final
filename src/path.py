@@ -19,6 +19,10 @@ extracted_research_questions_dir = outputs_dir / "extracted_research_questions"
 # llama factory
 llama_factory_dir = Path("../LLaMA-Factory-CSE587")
 
+# human annotation
+human_annotation_dir = Path("human_annotation")
+human_annotation_csv_dir = human_annotation_dir / "csv"
+
 
 def get_model_short_name(model_name: str) -> str:
     return model_name.split("/")[-1]
