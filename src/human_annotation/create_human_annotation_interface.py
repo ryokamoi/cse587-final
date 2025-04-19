@@ -19,6 +19,9 @@ def main():
         extracted_data = [json.loads(line) for line in f][:target_size]
     
     data_ids = [e["id"] for e in extracted_data]
+    research_questions = [
+        e["research_question"] for e in extracted_data
+    ]
     approaches = {
         "extracted": [e["approach"] for e in extracted_data],
     }
@@ -41,11 +44,12 @@ def main():
     for method_name in ["extracted", "llama31-8B", "llama33-70B"]:
         with open(human_annotation_csv_dir / f"{method_name}.csv", "w") as f:
             writer = csv.writer(f)
-            writer.writerow(["id", "approach1", "approach2"])
+            writer.writerow(["id", "research question", "approach1", "approach2"])
             for idx, approach in enumerate(approaches[method_name]):
                 writer.writerow(
                     [
                         data_ids[idx],
+                        research_questions[idx],
                         approach, approaches["llama31-8B-finetuned"][idx]
                     ]
                 )
