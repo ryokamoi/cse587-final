@@ -78,6 +78,15 @@ def main():
             with open(evaluation_dataset_path, "w") as f:
                 for example in processed_research_questions:
                     f.write(json.dumps(example) + "\n")
+            
+            # save stats
+            stats_path = evaluation_dataset_path.with_suffix(".stats.json")
+            with open(stats_path, "w") as f:
+                json.dump(
+                    {"num_examples": len(processed_research_questions)},
+                    f, indent=4
+                )
+
         else:  # train
             # convert into ShareGPT format
             share_gpt_format_dataset = []
@@ -103,6 +112,14 @@ def main():
                     f.write(json.dumps(example) + "\n")
             print(f"Saved to {output_path}")
 
+            # save stats
+            stats_path = output_path.with_suffix(".stats.json")
+            with open(stats_path, "w") as f:
+                json.dump(
+                    {"num_examples": len(share_gpt_format_dataset)},
+                    f, indent=4
+                )
+
             # update dataset_info.json in llama factory
             dataset_info_path = llama_factory_dir / "data/dataset_info.json"
             with open(dataset_info_path, "r") as f:
@@ -118,7 +135,9 @@ def main():
 
             with open(dataset_info_path, "w") as f:
                 json.dump(dataset_info, f, indent=2)
-            print(f"Updated {dataset_info_path} with {dataset_name} dataset info.")
+            print(
+                f"Updated {dataset_info_path} with {dataset_name} dataset info."
+            )
 
 if __name__ == "__main__":
     main()
