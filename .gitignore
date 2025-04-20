@@ -1,7 +1,12 @@
 *__pycache__
 
-llama_factory_finetuned_models
-!llama_factory_finetuned_models/*
-!llama_factory_finetuned_models/README.md
+llama_factory_finetuned_models/**
+!llama_factory_finetuned_models/**/
+!llama_factory_finetuned_models/**/README.md
+!llama_factory_finetuned_models/**/config.json
+!llama_factory_finetuned_models/**/trainer_log.jsonl
+!llama_factory_finetuned_models/**/train_results.json
+!llama_factory_finetuned_models/**/trainer_state.json
+!llama_factory_finetuned_models/**/training_loss.png
 
 pyrightconfig.json
